@@ -10,6 +10,7 @@ __pycache__/
 stt_API.json
 storage_API.json
 OpenAI_API.json
+notion_API.json
 
 # C extensions
 *.so
