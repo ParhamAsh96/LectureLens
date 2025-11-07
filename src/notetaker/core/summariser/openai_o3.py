@@ -55,6 +55,3 @@ def save_summary():
 
     with open("src/notetaker/core/data/summary.json", "w", encoding="utf-8") as file:
         json.dump(data, file, ensure_ascii=False, indent=2)
-
-
-save_summary()

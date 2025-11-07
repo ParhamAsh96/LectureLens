@@ -19,7 +19,6 @@ def get_or_create_bucket(name, location):
     except NotFound:
         pass
 
-
     try:
         bucket = storage_client.create_bucket(name, location=location)
         print(f"Created bucket: {bucket.name} in {bucket.location}")
@@ -30,19 +29,22 @@ def get_or_create_bucket(name, location):
         print(f"Bucket exists after conflict. Location: {bucket.location}")
         return bucket
 
-bucket = get_or_create_bucket(BUCKET_NAME, LOCATION)
-
 
 def upload_to_bucket(blob_name, file_path, bucket_name):
     try:
         bucket = storage_client.get_bucket(bucket_name)
         blob = bucket.blob(blob_name)
         blob.upload_from_filename(file_path)
+        print("The audio file was successfully uploaded.")
         return True
    
     except Exception as e:
         print(f"Upload failed: {e}")
         return False
     
-file_path = r"src/notetaker/core/data/output.wav"
-upload_to_bucket("lecture_voice", file_path, bucket)
+
+def uplaod_voice():
+    bucket = get_or_create_bucket(BUCKET_NAME, LOCATION)
+
+    voice_path = r"src/notetaker/core/data/voice.wav"
+    upload_to_bucket("lecture_voice", voice_path, bucket)
