@@ -9,6 +9,7 @@ __pycache__/
 # API Keys
 stt_API.json
 storage_API.json
+OpenAI_API.json
 
 # C extensions
 *.so
