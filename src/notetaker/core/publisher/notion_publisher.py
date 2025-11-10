@@ -19,37 +19,26 @@ headers = {
 
 
 def read_data():
-    print("Reading the note...\n")
+    print("Reading the note...")
     
     with open("src/notetaker/core/data/summary.json", "r") as file:
         summary = json.load(file)
-
-    take_aways = []
-    for item in summary["take_aways"]:
-        p = (item.get("point") or "").strip()
-        e = (item.get("explanation") or "").strip()
-        if p and e:
-            take_aways.append(f"• {p} — {e}")
-        elif p:
-            take_aways.append(f"• {p}")
-        elif e:
-            take_aways.append(f"• {e}")
-
     
     course = summary["course"]
     title = summary["title"]
-    date = summary["date"]
+    publish_date = summary["date"]
     description = summary["summary"]
-    takeaways_text = "\n".join(take_aways)
+    #takeaways_text = "\n".join(summary["take-aways"])
+    takeaways_text = summary["take-aways"]
 
-    return course, title, date, description, takeaways_text
+    return course, title, publish_date, description, takeaways_text
 
 
-def create_template(course, title, date, description, takeaways_text):
+def create_template(course, title, publish_date, description, takeaways_text):
     data = {
     "Course": {"title": [{"text": {"content": course}}]},
     "Title": {"rich_text": [{"text": {"content": title}}]},
-    "Date": {"rich_text": [{"text": {"content": date}}]},
+    "Date": {"rich_text": [{"text": {"content": publish_date}}]},
     "Description": {"rich_text": [{"text": {"content": description}}]},
     "Take-aways": {"rich_text": [{"text": {"content": takeaways_text}}]},
     }
@@ -72,6 +61,6 @@ def create_page(data: dict) :
 
 
 def publish_notes():
-    course, title, date, description, takeaways_text = read_data()
-    data = create_template(course, title, date, description, takeaways_text)
+    course, title, publish_date, description, takeaways_text = read_data()
+    data = create_template(course, title, publish_date, description, takeaways_text)
     create_page(data)
