@@ -1,4 +1,3 @@
-# LectureLens
 <p align="center">
   <img src="./docs/Logo/LectureLens_logo.png" alt="LectureLens Logo" width="480" />
 </p>
