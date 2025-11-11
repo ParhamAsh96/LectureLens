@@ -41,10 +41,10 @@ This project uses the **Pipe-and-Filter** style. Every *filter* takes an input, 
 This makes testing and swapping parts easy (for example, changing the STT provider later).
 
 **Architecture Diagram (placeholder):**  
-> `![LectureLens Architecture](./docs/architecture-pipe-and-filter.png)`
+> `![LectureLens Architecture](./docs/Architecture/architecture-pipe-and-filter.png)`
 
 **High-level layout**
-> `![LectureLens High-level Layout](./docs/high-level-layout.png)`
+> `![LectureLens High-level Layout](./docs/High_Level_Layout/high-level-layout.png)`
 
 
 ---
@@ -111,7 +111,7 @@ LOG_LEVEL=INFO
 ```
 ### 3) Install
 ```bash
-git clone `https://github.com/ParhamAsh96/Note_Taker.git`
+git clone https://github.com/ParhamAsh96/LectureLens.git
 cd <repo-folder>
 python3.12 -m venv .venv
 source .venv/bin/activate
