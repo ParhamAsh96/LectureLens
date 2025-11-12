@@ -1,4 +1,5 @@
 import time
+from dotenv import load_dotenv
 from src.notetaker.core.audio_recorder.recorder import record_voice
 from src.notetaker.core.google_storage.voice_saver import uplaod_voice
 from src.notetaker.core.speech_to_text.google_stt import transcribe_voice
@@ -10,6 +11,8 @@ from src.notetaker.core.cleaner.cleaner import clean_data
 
 
 def main():
+    load_dotenv()
+
     course_name = input("Please enter the name of the course: \n")
     lecture_title = input("Please enter the lecture title: \n")
     
@@ -33,7 +36,7 @@ def main():
 
     # Filter 6
     save_summary(summary)
-    
+
     # Filter 7
     publish_notes()
 
