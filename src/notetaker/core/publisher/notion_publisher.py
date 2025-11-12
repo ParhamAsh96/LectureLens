@@ -1,8 +1,12 @@
-import json
-import requests
+import json, requests, os
 
 
-with open("src/notetaker/core/publisher/notion_API.json", "r", encoding="utf-8") as file:
+notion_path = os.getenv("NOTION_API_KEY", "./config/notion_api.json")
+
+if not os.path.isfile(notion_path):
+    raise FileNotFoundError(f"Notion JSON not found: {notion_path}")
+    
+with open(notion_path, "r", encoding="utf-8") as file:
     config = json.load(file)
 
 private_key = config["api_key"]
@@ -46,7 +50,7 @@ def create_template(course, title, publish_date, description, takeaways_text):
     return data
 
 
-def create_page(data: dict) :
+def create_page(data: dict):
     create_url = "https://api.notion.com/v1/pages"
 
     payload = {"parent": {"database_id": DATABASE_ID}, "properties": data}

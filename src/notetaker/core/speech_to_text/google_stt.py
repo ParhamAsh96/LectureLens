@@ -1,4 +1,4 @@
-import pyaudio
+import pyaudio, os
 from google.oauth2 import service_account
 from google.cloud import speech
 
@@ -7,11 +7,18 @@ def transcribe_voice():
     p = pyaudio.PyAudio()
     info = p.get_default_input_device_info()
 
+    client_file = os.getenv("GOOGLE_SPEECH_CREDENTIALS", "./config/gcp-speech.json")
+    credentials = service_account.Credentials.from_service_account_file(client_file)
+    client = speech.SpeechClient(credentials=credentials)
+
+    gs_uri = os.getenv("GCS_AUDIO_URI", "gs://voice-data-bucket-12345/lecture_voice")
+    """
     client_file = "src/notetaker/core/speech_to_text/stt_API.json"
     credentials = service_account.Credentials.from_service_account_file(client_file)
     client = speech.SpeechClient(credentials=credentials)
 
     gs_uri = "gs://voice-data-bucket-12345/lecture_voice"
+    """
     config = speech.RecognitionConfig(
         encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
         sample_rate_hertz=int(info["defaultSampleRate"]),

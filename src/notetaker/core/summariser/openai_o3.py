@@ -1,16 +1,20 @@
-import json
-import time
+import json, os
 from pathlib import Path
 from openai import OpenAI
 
-with open("src/notetaker/core/summariser/OpenAI_API.json", "r", encoding="utf-8") as file:
+
+path = os.getenv(
+    "OPENAI_API_KEY",
+    "./config/OpenAI_API.json"
+)
+
+if not os.path.exists(path):
+    raise FileNotFoundError(f"OpenAI JSON not found at: {path}")
+
+with open(path, "r", encoding="utf-8") as file:
     config = json.load(file)
 
-private_key = config["api_key"]
-
-client = OpenAI(
-  api_key=private_key
-)
+client = OpenAI(api_key=config["api_key"])
 
 
 def summarize_transcript(path="src/notetaker/core/data/transcript.json"):
@@ -46,7 +50,7 @@ def summarize_transcript(path="src/notetaker/core/data/transcript.json"):
         "    • At least 550 characters that give a detailed explanation of the key ideas.\n"
         "- Blend summary and detailed explanation naturally (no headings, no labels, no section breaks, no bullet points).\n"
         "- Use simple B2-level language, coherent flow, and avoid repetition and filler.\n"
-        "- take-aways: 6–8 key points joined into one string using '; '. (limit 400 characters).\n\n"
+        "- take-aways: 6–8 key points joined into one string using '; '. (limit 400< characters).\n\n"
         "Output schema (example values only):\n"
         "{\n"
         "  'course': 'course name from the transcript',\n"

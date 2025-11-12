@@ -1,15 +1,16 @@
-import os
-import math
+import os, math
+from google.oauth2 import service_account
 from google.cloud import storage
 from google.api_core.exceptions import NotFound, Conflict
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "src/notetaker/core/google_storage/storage_API.json"
 
-PROJECT_ID = "notetaker-477400"
-BUCKET_NAME = "voice-data-bucket-12345"
-LOCATION = "EU"
+STORAGE_KEY_PATH = os.getenv("GOOGLE_STORAGE_CREDENTIALS", "./config/gcp-storage.json")
+PROJECT_ID       = os.getenv("GCP_PROJECT", "notetaker-477400")
+BUCKET_NAME      = os.getenv("GCS_BUCKET", "voice-data-bucket-12345")
+LOCATION         = os.getenv("GCS_LOCATION", "EU")
 
-storage_client = storage.Client(project=PROJECT_ID)
+creds = service_account.Credentials.from_service_account_file(STORAGE_KEY_PATH)
+storage_client = storage.Client(credentials=creds, project=PROJECT_ID)
 
 target_chunks = 64
 min_chunk_mb = 8
